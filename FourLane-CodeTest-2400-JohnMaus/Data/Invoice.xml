@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<InvoiceQueryRs statusCode="0" statusSeverity="none" statusMessage="" retCount="1" iteratorRemainingCount="0" iteratorID="{A75B226E-088B-4F82-A85D-1CC91E2CE231}">
+	<InvoiceRet>
+		<!-- optional, may repeat -->
+		<TxnID>1</TxnID>
+		<!-- required -->
+		<TimeCreated>2021-05-28T08:00:00.000</TimeCreated>
+		<!-- required -->
+		<TimeModified>2021-05-30T09:42:30.000</TimeModified>
+		<!-- required -->
+		<EditSequence>Edited</EditSequence>
+		<!-- required -->
+		<TxnNumber>100</TxnNumber>
+		<!-- optional -->
+		<CustomerRef>
+			<!-- required -->
+			<ListID>1</ListID>
+			<!-- optional -->
+			<FullName>John Patrick Maus</FullName>
+			<!-- optional -->
+		</CustomerRef>
+		<ClassRef>
+			<!-- optional -->
+			<ListID>0</ListID>
+			<!-- optional -->
+			<FullName>InvoiceRet</FullName>
+			<!-- optional -->
+		</ClassRef>
+		<!-- BEGIN OR -->
+		<InvoiceLineRet>
+			<!-- optional -->
+			<TxnLineID>0</TxnLineID>
+			<!-- required -->
+			<ItemRef>
+				<!-- optional -->
+				<ListID>10</ListID>
+				<!-- optional -->
+				<FullName>Luminara</FullName>
+				<!-- optional -->
+			</ItemRef>
+			<Desc>Luminara Wax</Desc>
+			<!-- optional -->
+			<Quantity>50</Quantity>
+			<!-- optional -->
+			<UnitOfMeasure>Gallons</UnitOfMeasure>
+			<!-- optional -->
+			<OverrideUOMSetRef>
+				<!-- optional -->
+				<ListID>0</ListID>
+				<!-- optional -->
+				<FullName>NO OVERRIDE</FullName>
+				<!-- optional -->
+			</OverrideUOMSetRef>
+			<!-- BEGIN OR -->
+			<Rate>0.57</Rate>
+			<!-- optional -->
+			<!-- OR -->
+			<RatePercent>2</RatePercent>
+			<!-- optional -->
+			<!-- END OR -->
+			<ClassRef>
+				<!-- optional -->
+				<ListID>1</ListID>
+				<!-- optional -->
+				<FullName>Chemical</FullName>
+				<!-- optional -->
+			</ClassRef>
+			<Amount>1</Amount>
+			<!-- optional -->
+			<Other1>Handle with Care</Other1>
+			<!-- optional -->
+			<Other2></Other2>
+			<!-- optional -->
+			<DataExtRet>
+				<!-- optional, may repeat -->
+				<OwnerID>{F8EA4995-C6AA-4415-9473-0A0CD203A5CA}</OwnerID>
+				<!-- optional -->
+				<DataExtName>Luminara Wax Expiration</DataExtName>
+				<!-- required -->
+				<!-- DataExtType may have one of the following values: AMTTYPE, DATETIMETYPE, INTTYPE, PERCENTTYPE, PRICETYPE, QUANTYPE, STR1024TYPE, STR255TYPE -->
+				<DataExtType>DATETIMETYPE</DataExtType>
+				<!-- required -->
+				<DataExtValue>2021-06-28T09:00:00.000</DataExtValue>
+				<!-- required -->
+			</DataExtRet>
+		</InvoiceLineRet>
+		<!-- OR -->
+		<InvoiceLineGroupRet>
+			<!-- optional -->
+			<TxnLineID>0</TxnLineID>
+			<!-- required -->
+			<ItemGroupRef>
+				<!-- required -->
+				<ListID>1</ListID>
+				<!-- optional -->
+				<FullName>Chemicals</FullName>
+				<!-- optional -->
+			</ItemGroupRef>
+			<Desc>Car Wash Chemicals</Desc>
+			<!-- optional -->
+			<Quantity>50</Quantity>
+			<!-- optional -->
+			<UnitOfMeasure>Gallons</UnitOfMeasure>
+			<!-- optional -->
+			<OverrideUOMSetRef>
+				<!-- optional -->
+				<ListID>0</ListID>
+				<!-- optional -->
+				<FullName>NO OVERRIDE</FullName>
+				<!-- optional -->
+			</OverrideUOMSetRef>
+			<IsPrintItemsInGroup>true</IsPrintItemsInGroup>
+			<!-- required -->
+			<TotalAmount>1</TotalAmount>
+			<!-- required -->
+			<InvoiceLineRet>
+				<!-- optional -->
+				<TxnLineID>0</TxnLineID>
+				<!-- required -->
+				<ItemRef>
+					<!-- optional -->
+					<ListID>10</ListID>
+					<!-- optional -->
+					<FullName>Luminara</FullName>
+					<!-- optional -->
+				</ItemRef>
+				<Desc>Luminara Wax</Desc>
+				<!-- optional -->
+				<Quantity>50</Quantity>
+				<!-- optional -->
+				<UnitOfMeasure>Gallons</UnitOfMeasure>
+				<!-- optional -->
+				<OverrideUOMSetRef>
+					<!-- optional -->
+					<ListID>0</ListID>
+					<!-- optional -->
+					<FullName>NO OVERRIDE</FullName>
+					<!-- optional -->
+				</OverrideUOMSetRef>
+				<!-- BEGIN OR -->
+				<Rate>0.57</Rate>
+				<!-- optional -->
+				<!-- OR -->
+				<RatePercent>2</RatePercent>
+				<!-- optional -->
+				<!-- END OR -->
+				<ClassRef>
+					<!-- optional -->
+					<ListID>1</ListID>
+					<!-- optional -->
+					<FullName>Chemical</FullName>
+					<!-- optional -->
+				</ClassRef>
+				<Amount>1</Amount>
+				<!-- optional -->
+				<Other1>Handle with Care</Other1>
+				<!-- optional -->
+				<Other2></Other2>
+				<!-- optional -->
+				<DataExtRet>
+					<!-- optional, may repeat -->
+					<OwnerID>{F8EA4995-C6AA-4415-9473-0A0CD203A5CA}</OwnerID>
+					<!-- optional -->
+					<DataExtName>Luminara Wax Expiration</DataExtName>
+					<!-- required -->
+					<!-- DataExtType may have one of the following values: AMTTYPE, DATETIMETYPE, INTTYPE, PERCENTTYPE, PRICETYPE, QUANTYPE, STR1024TYPE, STR255TYPE -->
+					<DataExtType>DATETIMETYPE</DataExtType>
+					<!-- required -->
+					<DataExtValue>2021-06-28T09:00:00.000</DataExtValue>
+					<!-- required -->
+				</DataExtRet>
+			</InvoiceLineRet>
+			<DataExtRet>
+				<!-- optional, may repeat -->
+				<OwnerID>{5A0F6BC7-200E-4707-A1E1-B1AC9A5CDF46}</OwnerID>
+				<!-- optional -->
+				<DataExtName>Chemical Earliest Expiration</DataExtName>
+				<!-- required -->
+				<!-- DataExtType may have one of the following values: AMTTYPE, DATETIMETYPE, INTTYPE, PERCENTTYPE, PRICETYPE, QUANTYPE, STR1024TYPE, STR255TYPE -->
+				<DataExtType>DATETIMETYPE</DataExtType>
+				<!-- required -->
+				<DataExtValue>2021-06-28T09:00:00.000</DataExtValue>
+				<!-- required -->
+			</DataExtRet>
+		</InvoiceLineGroupRet>
+		<!-- END OR -->
+		<DataExtRet>
+			<!-- optional, may repeat -->
+			<OwnerID>{563C5146-4563-4894-AB47-7CA776D09FFB}</OwnerID>
+			<!-- optional -->
+			<DataExtName>Company Name</DataExtName>
+			<!-- required -->
+			<!-- DataExtType may have one of the following values: AMTTYPE, DATETIMETYPE, INTTYPE, PERCENTTYPE, PRICETYPE, QUANTYPE, STR1024TYPE, STR255TYPE -->
+			<DataExtType>STR1024TYPE</DataExtType>
+			<!-- required -->
+			<DataExtValue>Benny's Car Wash</DataExtValue>
+			<!-- required -->
+		</DataExtRet>
+	</InvoiceRet>
+</InvoiceQueryRs>
