@@ -103,24 +103,24 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		[XmlElement(ElementName = "InvoiceLineRet")]
 		public List<InvoiceLineRet> invoiceLineRets { get; set; }
 
-		// Just a helper function to get one invoice line by txnLineID
-		public InvoiceLineRet GetInvoiceLineRet(uint txnLineID)
-		{
-			return invoiceLineRets.FirstOrDefault(e => e.txnLineID == txnLineID);
-		}
-
 		// This element has its own child properties (There may be more than one, so making a list)
 		[XmlElement(ElementName = "InvoiceLineGroupRet")]
 		public List<InvoiceLineGroupRet> invoiceLineGroupRets { get; set; }
 
-		public InvoiceLineGroupRet GetInvoiceLineGroupRet(uint txnLineID)
-		{
-			return invoiceLineGroupRets.FirstOrDefault(i => i.txnLineID == txnLineID);
-		}
-
 		// This element has its own child properties (There may be more than one, so making a list)
 		[XmlElement(ElementName = "DataExtRet")]
 		public List<DataExtRet> dataExtRets { get; set; }
+
+		// Just a helper function to get one invoice line by txnLineID
+		public IInvoiceLine GetInvoiceLineRet(uint txnLineID, bool lineGroup)
+		{
+			if (lineGroup == true)
+			{
+				return invoiceLineGroupRets.FirstOrDefault(e => e.txnLineID == txnLineID);
+			}
+
+			return invoiceLineRets.FirstOrDefault(e => e.txnLineID == txnLineID);
+		}
 
 		public DataExtRet GetDataExtRet(Guid ownerID)
 		{
@@ -219,7 +219,7 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		[XmlElement(ElementName = "InvoiceLineRet")]
 		public List<InvoiceLineRet> invoiceLineRets { get; set; }
 
-		public InvoiceLineRet GetInvoiceLineRet(uint txnLineID)
+		public IInvoiceLine GetInvoiceLineRet(uint txnLineID)
 		{
 			return invoiceLineRets.FirstOrDefault(i => i.txnLineID == txnLineID);
 		}
