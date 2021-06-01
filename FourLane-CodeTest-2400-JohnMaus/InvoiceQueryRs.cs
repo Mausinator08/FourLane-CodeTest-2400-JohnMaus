@@ -54,13 +54,23 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		#endregion
 	}
 
+	// For ClassRef, CustomerRef, ItemRef, OverrideUOMSetRef, ItemGroupRef
+	public class Reference
+	{
+		[XmlElement(ElementName = "ListID")]
+		public uint listID { get; set; }
+
+		[XmlElement(ElementName = "FullName")]
+		public string fullName { get; set; }
+	}
+
 	// InvoiceRet is the only immediate child element in InvoiceQueryRs
 	public class InvoiceRet
 	{
 		public InvoiceRet()
 		{
-			customerRef = new CustomerRef();
-			classRef = new ClassRef();
+			customerRef = new Reference();
+			classRef = new Reference();
 			invoiceLineRets = new List<InvoiceLineRet>();
 			invoiceLineGroupRets = new List<InvoiceLineGroupRet>();
 			dataExtRets = new List<DataExtRet>();
@@ -83,11 +93,11 @@ namespace FourLane_CodeTest_2400_JohnMaus
 
 		// This element has its own child properties
 		[XmlElement(ElementName = "CustomerRef")]
-		public CustomerRef customerRef { get; set; }
+		public Reference customerRef { get; set; }
 
 		// This element has its own child properties
 		[XmlElement(ElementName = "ClassRef")]
-		public ClassRef classRef { get; set; }
+		public Reference classRef { get; set; }
 
 		// This element has its own child properties (There may be more than one, so making a list)
 		[XmlElement(ElementName = "InvoiceLineRet")]
@@ -118,42 +128,13 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		}
 	}
 
-	// Is child of the InvoiceRef element.
-	public class CustomerRef
+	public interface IInvoiceLine
 	{
-		[XmlElement(ElementName = "ListID")]
-		public uint listID { get; set; }
-
-		[XmlElement(ElementName = "FullName")]
-		public string fullName { get; set; }
-	}
-
-	// Is child of InvoiceRef, InvoiceLineItemRef.
-	public class ClassRef
-	{
-		[XmlElement(ElementName = "ListID")]
-		public uint listID { get; set; }
-
-		[XmlElement(ElementName = "FullName")]
-		public string fullName { get; set; }
-	}
-
-	// Is child of InvoiceRef, InvoiceLineGroupRet
-	public class InvoiceLineRet
-	{
-		public InvoiceLineRet()
-		{
-			itemRef = new ItemRef();
-			overrideUOMSetRef = new OverrideUOMSetRef();
-			classRef = new ClassRef();
-			dataExtRets = new List<DataExtRet>();
-		}
-
 		[XmlElement(ElementName = "TxnLineID")]
 		public uint txnLineID { get; set; }
 
-		[XmlElement(ElementName = "ItemRef")]
-		public ItemRef itemRef { get; set; }
+		// Xml Serialization set in inheriting class
+		public Reference itemRef { get; set; }
 
 		[XmlElement(ElementName = "Desc")]
 		public string desc { get; set; }
@@ -166,7 +147,26 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		public string unitOfMeasure { get; set; }
 
 		[XmlElement(ElementName = "OverrideUOMSetRef")]
-		public OverrideUOMSetRef overrideUOMSetRef { get; set; }
+		public Reference overrideUOMSetRef { get; set; }
+
+		public double amount { get; set; }
+
+		[XmlElement(ElementName = "DataExtRet")]
+		public List<DataExtRet> dataExtRets { get; set; }
+
+		public DataExtRet GetDataExtRet(Guid ownerID);
+	}
+
+	// Is child of InvoiceRef, InvoiceLineGroupRet
+	public class InvoiceLineRet : IInvoiceLine
+	{
+		public InvoiceLineRet()
+		{
+			itemRef = new Reference();
+			overrideUOMSetRef = new Reference();
+			classRef = new Reference();
+			dataExtRets = new List<DataExtRet>();
+		}
 
 		[XmlElement(ElementName = "Rate")]
 		public decimal rate { get; set; }
@@ -175,10 +175,7 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		public decimal ratePercent { get; set; }
 
 		[XmlElement(ElementName = "ClassRef")]
-		public ClassRef classRef { get; set; }
-
-		[XmlElement(ElementName = "Amount")]
-		public double amount { get; set; }
+		public Reference classRef { get; set; }
 
 		[XmlElement(ElementName = "Other1")]
 		public string other1 { get; set; }
@@ -186,50 +183,38 @@ namespace FourLane_CodeTest_2400_JohnMaus
 		[XmlElement(ElementName = "Other2")]
 		public string other2 { get; set; }
 
-		[XmlElement(ElementName = "DataExtRet")]
+		// IInvoiceLine Interface Implementations
+		public uint txnLineID { get; set; }
+		public Reference itemRef { get; set; }
+		public string desc { get; set; }
+		public double quantity { get; set; }
+		public string unitOfMeasure { get; set; }
+		public Reference overrideUOMSetRef { get; set; }
+		public double amount { get; set; }
 		public List<DataExtRet> dataExtRets { get; set; }
 
 		public DataExtRet GetDataExtRet(Guid ownerID)
 		{
 			return dataExtRets.FirstOrDefault(d => d.ownerID == ownerID);
 		}
-	}
+}
 
 	// Is child of InvoiceRef
-	public class InvoiceLineGroupRet
+	public class InvoiceLineGroupRet : IInvoiceLine
 	{
 		public InvoiceLineGroupRet()
 		{
-			itemGroupRef = new ItemGroupRef();
-			overrideUOMSetRef = new OverrideUOMSetRef();
+			itemRef = new Reference();
+			overrideUOMSetRef = new Reference();
 			invoiceLineRets = new List<InvoiceLineRet>();
 			dataExtRets = new List<DataExtRet>();
 		}
-
-		[XmlElement(ElementName = "TxnLineID")]
-		public uint txnLineID { get; set; }
-
-		[XmlElement(ElementName = "ItemGroupRef")]
-		public ItemGroupRef itemGroupRef { get; set; }
-
-		[XmlElement(ElementName = "Desc")]
-		public string desc { get; set; }
-
-		// Making a double in case UnitOfMeasure can cause decimals for inventory quantity, like chemicals in a barrel for a car wash.
-		[XmlElement(ElementName = "Quantity")]
-		public double quantity { get; set; }
-
-		[XmlElement(ElementName = "UnitOfMeasure")]
-		public string unitOfMeasure { get; set; }
-
-		[XmlElement(ElementName = "OverrideUOMSetRef")]
-		public OverrideUOMSetRef overrideUOMSetRef { get; set; }
 
 		[XmlElement(ElementName = "IsPrintItemsInGroup")]
 		public bool isPrintItemsInGroup { get; set; }
 
 		[XmlElement(ElementName = "TotalAmount")]
-		public double totalAmount { get; set; }
+		public double amount { get; set; }
 
 		[XmlElement(ElementName = "InvoiceLineRet")]
 		public List<InvoiceLineRet> invoiceLineRets { get; set; }
@@ -239,7 +224,14 @@ namespace FourLane_CodeTest_2400_JohnMaus
 			return invoiceLineRets.FirstOrDefault(i => i.txnLineID == txnLineID);
 		}
 
-		[XmlElement(ElementName = "DataExtRet")]
+		// IInvoice Interface Implementations
+		[XmlElement(ElementName = "ItemGroupRef")]
+		public Reference itemRef { get; set; }
+		public uint txnLineID { get; set; }
+		public string desc { get; set; }
+		public double quantity { get; set; }
+		public string unitOfMeasure { get; set; }
+		public Reference overrideUOMSetRef { get; set; }
 		public List<DataExtRet> dataExtRets { get; set; }
 
 		public DataExtRet GetDataExtRet(Guid ownerID)
@@ -265,32 +257,5 @@ namespace FourLane_CodeTest_2400_JohnMaus
 
 		[XmlElement(ElementName = "DataExtValue")]
 		public string dataExtValue { get; set; }
-	}
-
-	public class ItemRef
-	{
-		[XmlElement(ElementName = "ListID")]
-		public uint listID { get; set; }
-
-		[XmlElement(ElementName = "FullName")]
-		public string fullName { get; set; }
-	}
-
-	public class ItemGroupRef
-	{
-		[XmlElement(ElementName = "ListID")]
-		public uint listID { get; set; }
-
-		[XmlElement(ElementName = "FullName")]
-		public string fullName { get; set; }
-	}
-
-	public class OverrideUOMSetRef
-	{
-		[XmlElement(ElementName = "ListID")]
-		public uint listID { get; set; }
-
-		[XmlElement(ElementName = "FullName")]
-		public string fullName { get; set; }
 	}
 }
